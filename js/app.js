@@ -59,15 +59,11 @@ window.onload = function() {
 
     ctx.drawImage(canvas, 0, 0);
 
-    // replace the image with the canvas
-    //image.parentNode.insertBefore(canvas, image);
-    //image.parentNode.removeChild(image);
   }
 
   document.querySelectorAll('input[type="range"]').forEach(function(el) {
 
     el.addEventListener('input', function() {
-
       update();
     })
 
@@ -75,26 +71,22 @@ window.onload = function() {
 
   document.querySelector('#randomize').addEventListener('click', function() {
 
+    shaR.value = random(15);
+    shaG.value = random(15);
+    shaB.value = random(15);
 
-    shaR.value = random(0);
-    shaG.value = random(0);
-    shaB.value = random(0);
+    midR.value = random(40);
+    midG.value = random(40);
+    midB.value = random(40);
 
-    midR.value = random(25);
-    midG.value = random(25);
-    midB.value = random(25);
-
-    hiR.value = random(50);
-    hiG.value = random(50);
-    hiB.value = random(50);
-
+    hiR.value = random(65);
+    hiG.value = random(65);
+    hiB.value = random(65);
 
     update();
-
   })
 
   document.querySelector('#reset').addEventListener('click', function() {
-
 
     shaR.value = 0.25;
     shaG.value = 0.25;
@@ -112,7 +104,6 @@ window.onload = function() {
     contrast.value = 0;
 
     update();
-
   })
 
   document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -165,6 +156,6 @@ window.onload = function() {
 };
 
 function random(min) {
-  let res = (Math.floor(Math.random() * 25) + min) / 100;
+  let res = (Math.floor(Math.random() * 20) + min) / 100;
   return res.toFixed(2)
 }
