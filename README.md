@@ -1,9 +1,9 @@
-# random-colorfilter-generator
+# Colorfilter Generator
 Randomly generates 'looks' or 'filters' for your images, which you can tweak afterwards
 
-## demo
+## Demo
 https://colorfilter-generator.vercel.app
 
-## preview
+## Preview
 
 ![Preview](/img/preview.png?raw=true "Preview")
