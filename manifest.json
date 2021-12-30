@@ -10,7 +10,7 @@
   "start_url": "/",
   "theme_color": "#000000",
   "categories": [],
-  "screenshots": [],
+  "screenshots": ["/img/preview-landscape.png", "/img/preview-portrait.png"],
   "icons": [],
   "shortcuts": []
 }
