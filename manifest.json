@@ -11,6 +11,6 @@
   "theme_color": "#000000",
   "categories": [],
   "screenshots": ["/img/preview-landscape.png", "/img/preview-portrait.png"],
-  "icons": [],
+  "icons": ["/AppIcons/Assets.xcassets/AppIcon.appiconset/1024.png"],
   "shortcuts": []
 }
