@@ -1,0 +1,16 @@
+{
+  "background_color": "none",
+  "description": "Grade your images automatically",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "AutoGrade",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "AutoGrade",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "categories": [],
+  "screenshots": [],
+  "icons": [],
+  "shortcuts": []
+}
