@@ -12,21 +12,9 @@
   "categories": [],
   "screenshots": ["\/img\/preview-landscape.png", "\/img\/preview-portrait.png"],
   "icons": [{
-    "src": "\/icons\/60.png",
-    "type": "image/png",
-    "sizes": "60x60"
-  }, {
     "src": "\/icons\/128.png",
     "type": "image/png",
     "sizes": "128x128"
-  }, {
-    "src": "\/icons\/150.png",
-    "type": "image/png",
-    "sizes": "150x150"
-  }, {
-    "src": "\/icons\/180.png",
-    "type": "image/png",
-    "sizes": "180x180"
   }, {
     "src": "\/icons\/512.png",
     "type": "image/png",

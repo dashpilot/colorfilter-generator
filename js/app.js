@@ -14,6 +14,13 @@ window.onload = function() {
   const preview = document.getElementById('preview');
   const ctx = preview.getContext('2d');
 
+  const haldImg = document.getElementById('haldImg');
+  const haldTexture = canvas.texture(haldImg);
+
+  const haldPreview = document.getElementById('hald-canvas');
+  const haldCtx = haldPreview.getContext('2d');
+
+
   const shaR = document.querySelector('#shaR');
   const shaG = document.querySelector('#shaG');
   const shaB = document.querySelector('#shaB');
@@ -56,8 +63,10 @@ window.onload = function() {
 
     // apply the filter
     canvas.draw(texture).curves(red, green, blue).brightnessContrast(exposure.value, contrast.value).update();
-
     ctx.drawImage(canvas, 0, 0);
+
+    canvas.draw(haldTexture).curves(red, green, blue).brightnessContrast(exposure.value, contrast.value).update();
+    haldCtx.drawImage(canvas, 0, 0);
 
   }
 
