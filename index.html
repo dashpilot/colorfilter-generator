@@ -42,7 +42,7 @@
 
 
           <div class="text-center mt-4">
-            <img id="image" width="800" height="450" src="img/img2.png">
+            <img id="image" width="800" height="450" src="img/img2.jpg">
             <canvas id="preview" width="800" height="450"></canvas>
           </div>
 
@@ -73,7 +73,7 @@
 
                 <div class="control pt-3">
                   <div class="buttons">
-                    <button class="btn btn-primary btn-style" id="randomize" @click="randomize()"><span class="icon"><i class="fa fa-sync-alt"></i></span> Random Grade</button>
+                    <button class="btn btn-primary btn-style" id="randomize" @click="randomize()"><span class="icon"><i class="fa fa-sync-alt"></i></span> Random</button>
                     <button class="btn btn-outline-dark float-end btn-style" id="reset" @click="reset()"><span class="icon"><i class="fa fa-times"></i></span> Reset</button>
                   </div>
                 </div>
@@ -162,8 +162,12 @@
                   <div class="btn-group w-100">
                     <button class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload</button>
                     <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save</button>
-                    <button class="btn btn-outline-dark" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
                   </div>
+                </div>
+
+                <div class="divider"></div>
+                <div class="control">
+                  <button class="btn btn-outline-dark" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
                 </div>
 
               </div>
