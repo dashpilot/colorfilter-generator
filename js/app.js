@@ -1,170 +1,118 @@
-window.onload = function() {
-  // try to create a WebGL canvas (will fail if WebGL isn't supported)
-  try {
-    var canvas = fx.canvas();
-  } catch (e) {
-    alert(e);
-    return;
-  }
-
-  // convert the image to a texture
-  const image = document.getElementById('image');
-  const texture = canvas.texture(image);
-
-  const preview = document.getElementById('preview');
-  const ctx = preview.getContext('2d');
-
-  const haldImg = document.getElementById('haldImg');
-  const haldTexture = canvas.texture(haldImg);
-
-  const haldPreview = document.getElementById('hald-canvas');
-  const haldCtx = haldPreview.getContext('2d');
+function app() {
+  return {
+    activeTab: 'controls',
+    shaR: 0.25,
+    shaG: 0.25,
+    shaB: 0.25,
+    midR: 0.5,
+    midG: 0.5,
+    midB: 0.5,
+    hiR: 0.75,
+    hiG: 0.75,
+    hiB: 0.75,
+    exposure: 0,
+    contrast: 0,
+    init() {
+      console.log('init');
 
 
-  const shaR = document.querySelector('#shaR');
-  const shaG = document.querySelector('#shaG');
-  const shaB = document.querySelector('#shaB');
+      // convert the image to a texture
+      window.image = document.getElementById('image');
+      window.texture = canvas.texture(image);
 
-  const midR = document.querySelector('#midR');
-  const midG = document.querySelector('#midG');
-  const midB = document.querySelector('#midB');
+      window.preview = document.getElementById('preview');
+      window.ctx = preview.getContext('2d');
 
-  const hiR = document.querySelector('#hiR');
-  const hiG = document.querySelector('#hiG');
-  const hiB = document.querySelector('#hiB');
+      window.haldImg = document.getElementById('haldImg');
+      window.haldTexture = canvas.texture(haldImg);
 
-  const exposure = document.querySelector('#exposure');
-  const contrast = document.querySelector('#contrast');
+      window.haldPreview = document.getElementById('hald-canvas');
+      window.haldCtx = haldPreview.getContext('2d');
 
-  function update() {
+      var myapp = this;
+      setTimeout(() => {
+        this.update();
+      }, 500)
 
 
-    var red = [
-      [0, 0],
-      [0.25, shaR.value],
-      [0.5, midR.value],
-      [0.75, hiR.value],
-      [1, 1]
-    ];
-    var green = [
-      [0, 0],
-      [0.25, shaG.value],
-      [0.5, midG.value],
-      [0.75, hiG.value],
-      [1, 1]
-    ];
-    var blue = [
-      [0, 0.3],
-      [0.25, shaB.value],
-      [0.5, midB.value],
-      [0.75, hiB.value],
-      [1, 1]
-    ];
+    },
+    update() {
 
-    // apply the filter
-    canvas.draw(texture).curves(red, green, blue).brightnessContrast(exposure.value, contrast.value).update();
-    ctx.drawImage(canvas, 0, 0);
+      var red = [
+        [0, 0],
+        [0.25, this.shaR],
+        [0.5, this.midR],
+        [0.75, this.hiR],
+        [1, 1]
+      ];
+      var green = [
+        [0, 0],
+        [0.25, this.shaG],
+        [0.5, this.midG],
+        [0.75, this.hiG],
+        [1, 1]
+      ];
+      var blue = [
+        [0, 0.3],
+        [0.25, this.shaB],
+        [0.5, this.midB],
+        [0.75, this.hiB],
+        [1, 1]
+      ];
 
-    canvas.draw(haldTexture).curves(red, green, blue).brightnessContrast(exposure.value, contrast.value).update();
-    haldCtx.drawImage(canvas, 0, 0);
+      // apply the filter
+      canvas.draw(texture).curves(red, green, blue).brightnessContrast(this.exposure, this.contrast).update();
+      ctx.drawImage(canvas, 0, 0);
 
-  }
+      canvas.draw(haldTexture).curves(red, green, blue).brightnessContrast(this.exposure, this.contrast).update();
+      haldCtx.drawImage(canvas, 0, 0);
 
-  document.querySelectorAll('input[type="range"]').forEach(function(el) {
+    },
+    randomize() {
+      this.shaR = this.random(15);
+      this.shaG = this.random(15);
+      this.shaB = this.random(15);
 
-    el.addEventListener('input', function() {
-      update();
-    })
+      this.midR = this.random(40);
+      this.midG = this.random(40);
+      this.midB = this.random(40);
 
-  })
+      this.hiR = this.random(65);
+      this.hiG = this.random(65);
+      this.hiB = this.random(65);
 
-  document.querySelector('#randomize').addEventListener('click', function() {
+      this.update();
+    },
+    random(min) {
+      let res = (Math.floor(Math.random() * 20) + min) / 100;
+      return res.toFixed(2)
+    },
+    reset() {
+      this.shaR = 0.25;
+      this.shaG = 0.25;
+      this.shaB = 0.25;
 
-    shaR.value = random(15);
-    shaG.value = random(15);
-    shaB.value = random(15);
+      this.midR = 0.5;
+      this.midG = 0.5;
+      this.midB = 0.5;
 
-    midR.value = random(40);
-    midG.value = random(40);
-    midB.value = random(40);
+      this.hiR = 0.75;
+      this.hiG = 0.75;
+      this.hiB = 0.75;
 
-    hiR.value = random(65);
-    hiG.value = random(65);
-    hiB.value = random(65);
+      this.exposure = 0;
+      this.contrast = 0;
 
-    update();
-  })
-
-  document.querySelector('#reset').addEventListener('click', function() {
-
-    shaR.value = 0.25;
-    shaG.value = 0.25;
-    shaB.value = 0.25;
-
-    midR.value = 0.5;
-    midG.value = 0.5;
-    midB.value = 0.5;
-
-    hiR.value = 0.75;
-    hiG.value = 0.75;
-    hiB.value = 0.75;
-
-    exposure.value = 0;
-    contrast.value = 0;
-
-    update();
-  })
-
-  document.getElementById('fileInput').addEventListener('change', function(e) {
-
-    var width = 800;
-    var imgUpload = new Image();
-    imgUpload.onload = function() {
-      var canvas = document.createElement('canvas'),
-        ctx = canvas.getContext("2d"),
-        oc = document.createElement('canvas'),
-        octx = oc.getContext('2d');
-      canvas.width = width; // destination canvas size
-      canvas.height = canvas.width * imgUpload.height / imgUpload.width;
-      var cur = {
-        width: Math.floor(imgUpload.width * 0.5),
-        height: Math.floor(imgUpload.height * 0.5)
-      }
-      oc.width = cur.width;
-      oc.height = cur.height;
-      octx.drawImage(imgUpload, 0, 0, cur.width, cur.height);
-      while (cur.width * 0.5 > width) {
-        cur = {
-          width: Math.floor(cur.width * 0.5),
-          height: Math.floor(cur.height * 0.5)
-        };
-        octx.drawImage(oc, 0, 0, cur.width * 2, cur.height * 2, 0, 0, cur.width, cur.height);
-      }
-      ctx.drawImage(oc, 0, 0, cur.width, cur.height, 0, 0, canvas.width, canvas.height);
-      var base64Image = canvas.toDataURL('image/jpeg')
-
-      console.log(base64Image);
-
-      document.getElementById('image').src = base64Image;
-
-      setTimeout(function() {
-        texture.loadContentsOf(image);
-        update();
-      }, 100)
-
+      this.update();
+    },
+    saveImage() {
+      let imagedata = preview.toDataURL('image/jpeg');
+      console.log(imagedata);
+      var a = document.createElement("a");
+      a.href = imagedata;
+      a.download = "Filmkit-Colorlab.jpg";
+      a.click();
     }
-    imgUpload.src = URL.createObjectURL(e.target.files[0]);
-  });
 
-  document.getElementById('choose-image').addEventListener('click', function(e) {
-    document.getElementById('fileInput').click();
-  });
-
-  update();
-
-};
-
-function random(min) {
-  let res = (Math.floor(Math.random() * 20) + min) / 100;
-  return res.toFixed(2)
+  }
 }

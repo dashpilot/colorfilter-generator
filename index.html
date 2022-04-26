@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>AutoGrade</title>
+  <title>Filmkit Colorlab</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,130 +14,187 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://use.typekit.net/wac6cpe.css">
 
+  <script src="https://unpkg.com/alpinejs" defer></script>
   <script type="text/javascript" src="js/glfx.js"></script>
+  <script>
+    try {
+      var canvas = fx.canvas();
+    } catch {
+      alert('Error, please reload the page')
+    }
+  </script>
 
 </head>
 
 <body>
 
+  <div id="app" x-data="app">
 
-  <nav>
-    <span class="icon"><i class="fa fa-sync-alt"></i></span> AutoGrade
-  </nav>
 
-  <div class="pad">
 
-    <div class="row">
-      <div class="col-md-12" id="main">
-        <div class="text-center">
 
-          <img id="image" width="800" height="450" src="img/img2.png">
-          <canvas id="preview" width="800" height="450"></canvas>
-          <button class="btn btn-outline-light mt-2" id="choose-image">Upload Image</button>
+    <main id="main">
+      <div class="row g-0">
 
-          <input type="file" id="fileInput" accept="image/*">
+        <div class="col-md-8 wdgt-main">
+
+          <div class="text-center toolbar">Filmkit QuickGrade</div>
+
+
+          <div class="text-center mt-4">
+            <img id="image" width="800" height="450" src="img/img2.png">
+            <canvas id="preview" width="800" height="450"></canvas>
+          </div>
+
+          <!-- LUT export -->
+          <div id="exports">
+            <img src="img/hald.png" id="haldImg" />
+            <canvas id="hald-canvas" width="125" height="125"></canvas>
+            <div id="placeholder"></div>
+            <canvas id="canvas-export" width="125" height="125"></canvas>
+          </div>
+
         </div>
 
-        <!-- LUT export -->
 
-        <div id="exports">
-          <img src="img/hald.png" id="haldImg" />
-          <canvas id="hald-canvas" width="125" height="125"></canvas>
-          <div id="placeholder"></div>
-          <canvas id="canvas-export" width="125" height="125"></canvas>
+        <div class="col-md-4 wdgt-side">
+
+
+          <div class="text-center toolbar">Controls</div>
+
+          <div class="controls h-100">
+            <div class="pad">
+
+
+              <!--
+              <div class="btn-group w-100 mb-4">
+                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'controls'}" @click="activeTab = 'controls'">Controls</button>
+                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'upload'}" @click="activeTab = 'upload'">Upload</button>
+                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'export'}" @click="activeTab = 'export'">Save</button>
+              </div>
+            -->
+
+              <div class="tab" x-show="activeTab == 'controls'">
+
+
+
+                <div class="control pt-3">
+                  <div class="buttons">
+                    <button class="btn btn-primary btn-style" id="randomize" @click="randomize()"><span class="icon"><i class="fa fa-sync-alt"></i></span> Random Grade</button>
+                    <button class="btn btn-outline-dark float-end btn-style" id="reset" @click="reset()"><span class="icon"><i class="fa fa-times"></i></span> Reset</button>
+                  </div>
+                </div>
+
+
+                <div class="divider"></div>
+
+
+                <div class="control">
+
+                  <div class="label first">Shadows</div>
+                  <div class="slider slider-red">
+                    <input class="form-range" type="range" name="shaR" min="0" max="0.5" step="0.01" value="0.25" id="shaR" x-model="shaR" @input="update()">
+                  </div>
+                </div>
+                <div class="control">
+                  <div class="slider slider-green">
+                    <input class="form-range" type="range" name="shaG" min="0" max="0.5" step="0.01" value="0.25" id="shaG" x-model="shaG" @input="update()">
+                  </div>
+                </div>
+                <div class="control">
+                  <div class="slider slider-blue">
+                    <input class="form-range" type="range" name="shaB" min="0" max="0.5" step="0.01" value="0.25" id="shaB" x-model="shaB" @input="update()">
+                  </div>
+                </div>
+
+
+                <div id="midtones" class="d-none">
+                  <div class="control">
+                    <div class="label">Midtones</div>
+                    <div class="slider slider-red">
+                      <input class="form-range" type="range" name="midR" min="0.25" max="0.75" step="0.01" value="0.5" id="midR" x-model="midR" @input="update()">
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="slider slider-green">
+                      <input class="form-range" type="range" name="midG" min="0.25" max="0.75" step="0.01" value="0.5" id="midG" x-model="midG" @input="update()">
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="slider slider-blue">
+                      <input class="form-range" type="range" name="midB" min="0.25" max="0.75" step="0.01" value="0.5" id="midB" x-model="midB" @input="update()">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="control">
+                  <div class="label">Highlights</div>
+                  <div class="slider slider-red">
+                    <input class="form-range" type="range" name="hiR" min="0.5" max="1" step="0.01" value="0.75" id="hiR" x-model="hiR" @input="update()">
+                  </div>
+                </div>
+                <div class="control">
+                  <div class="slider slider-green">
+                    <input class="form-range" type="range" name="hiG" min="0.5" max="1" step="0.01" value="0.75" id="hiG" x-model="hiG" @input="update()">
+                  </div>
+                </div>
+                <div class="control">
+                  <div class="slider slider-blue">
+                    <input class="form-range" type="range" name="hiB" min="0.5" max="1" step="0.01" value="0.75" id="hiB" x-model="hiB" @input="update()">
+                  </div>
+                </div>
+
+
+                <div class="control">
+                  <div class="label">Exposure</div>
+                  <div class="slider">
+                    <input class="form-range" type="range" name="exposure" min="-1" max="1" step="0.01" value="0" id="exposure" x-model="exposure" @input="update()">
+                  </div>
+                </div>
+
+                <div class="control">
+                  <div class="label">Contrast</div>
+                  <div class="slider">
+                    <input class="form-range" type="range" name="contrast" min="-1" max="1" step="0.01" value="0" id="contrast" x-model="contrast" @input="update()">
+                  </div>
+                </div>
+
+
+                <div class="divider"></div>
+
+
+              </div>
+
+              <div class="tab" id="tab-upload" x-show="activeTab == 'upload'">
+
+              </div>
+
+
+              <div class="tab" x-show="activeTab == 'export'">
+
+                <button class="btn btn-outline-light ml-2 mb-3 btn-style w-60" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
+
+                <button class="btn btn-outline-light ml-2 btn-style w-60" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
+              </div>
+
+            </div>
+          </div>
+
+
+
+
         </div>
-
 
 
       </div>
-    </div>
-  </div>
+    </main>
 
 
-  <div class="controls h-100">
-    <div class="pad">
-      <div class="buttons">
-        <button class="btn btn-outline-primary" id="randomize"><span class="icon"><i class="fa fa-sync-alt"></i></span> Generate</button>
-        <button class="btn btn-outline-light float-end" id="reset"><span class="icon"><i class="fa fa-times"></i></span> Reset</button>
-      </div>
-      <div class="control">
 
-        <div class="label first">Shadows</div>
-        <div class="slider slider-red">
-          <input type="range" name="shaR" min="0" max="0.5" step="0.01" value="0.25" id="shaR">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-green">
-          <input type="range" name="shaG" min="0" max="0.5" step="0.01" value="0.25" id="shaG">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-blue">
-          <input type="range" name="shaB" min="0" max="0.5" step="0.01" value="0.25" id="shaB">
-        </div>
-      </div>
+    <script type="text/javascript" src="js/upload.js"></script>
+    <script type="text/javascript" src="js/lut-export.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 
-
-      <div class="control">
-        <div class="label">Midtones</div>
-        <div class="slider slider-red">
-          <input type="range" name="midR" min="0.25" max="0.75" step="0.01" value="0.5" id="midR">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-green">
-          <input type="range" name="midG" min="0.25" max="0.75" step="0.01" value="0.5" id="midG">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-blue">
-          <input type="range" name="midB" min="0.25" max="0.75" step="0.01" value="0.5" id="midB">
-        </div>
-      </div>
-
-      <div class="control">
-        <div class="label">Highlights</div>
-        <div class="slider slider-red">
-          <input type="range" name="hiR" min="0.5" max="1" step="0.01" value="0.75" id="hiR">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-green">
-          <input type="range" name="hiG" min="0.5" max="1" step="0.01" value="0.75" id="hiG">
-        </div>
-      </div>
-      <div class="control">
-        <div class="slider slider-blue">
-          <input type="range" name="hiB" min="0.5" max="1" step="0.01" value="0.75" id="hiB">
-        </div>
-      </div>
-
-
-      <div class="control">
-        <div class="label">Exposure</div>
-        <div class="slider">
-          <input type="range" name="exposure" min="-1" max="1" step="0.01" value="0" id="exposure">
-        </div>
-      </div>
-
-      <div class="control">
-        <div class="label">Contrast</div>
-        <div class="slider">
-          <input type="range" name="contrast" min="-1" max="1" step="0.01" value="0" id="contrast">
-        </div>
-      </div>
-
-
-      <button class="btn btn-outline-primary ml-2" id="export"><span class="icon"><i class="fa fa-sync-alt"></i></span> Export LUT</button>
-
-
-    </div>
-  </div>
-
-  <script type="text/javascript" src="js/app.js"></script>
-
-  <script type="text/javascript" src="js/lut-export.js"></script>
 
 </body>
 
