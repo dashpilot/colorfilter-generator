@@ -41,9 +41,19 @@
           <div class="text-center toolbar">Filmkit QuickGrade</div>
 
 
-          <div class="text-center mt-4">
+          <div class="text-center">
             <img id="image" width="800" height="450" src="img/img2.jpg">
             <canvas id="preview" width="800" height="450"></canvas>
+          </div>
+
+          <div class="text-center mt-4">
+            <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
+
+            <div class="btn-group mb-4">
+              <button class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload Image</button>
+              <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
+            </div>
+
           </div>
 
           <!-- LUT export -->
@@ -153,17 +163,6 @@
                 </div>
 
 
-                <div class="divider"></div>
-
-                <div class="control">
-
-                  <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
-
-                  <div class="btn-group w-100">
-                    <button class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload</button>
-                    <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save</button>
-                  </div>
-                </div>
 
                 <div class="divider"></div>
                 <div class="control">
