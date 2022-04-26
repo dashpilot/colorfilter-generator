@@ -15,24 +15,28 @@ function app() {
     init() {
       console.log('init');
 
-
-      // convert the image to a texture
-      window.image = document.getElementById('image');
-      window.texture = canvas.texture(image);
-
-      window.preview = document.getElementById('preview');
-      window.ctx = preview.getContext('2d');
-
-      window.haldImg = document.getElementById('haldImg');
-      window.haldTexture = canvas.texture(haldImg);
-
-      window.haldPreview = document.getElementById('hald-canvas');
-      window.haldCtx = haldPreview.getContext('2d');
-
-      var myapp = this;
       setTimeout(() => {
-        this.update();
-      }, 500)
+
+
+        // convert the image to a texture
+        window.image = document.getElementById('image');
+        window.texture = canvas.texture(image);
+
+        window.preview = document.getElementById('preview');
+        window.ctx = preview.getContext('2d');
+
+        window.haldImg = document.getElementById('haldImg');
+        window.haldTexture = canvas.texture(haldImg);
+
+        window.haldPreview = document.getElementById('hald-canvas');
+        window.haldCtx = haldPreview.getContext('2d');
+
+        var myapp = this;
+        setTimeout(() => {
+          this.update();
+        }, 500)
+
+      }, 100)
 
 
     },
