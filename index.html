@@ -66,13 +66,6 @@
             <div class="pad">
 
 
-              <!--
-              <div class="btn-group w-100 mb-4">
-                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'controls'}" @click="activeTab = 'controls'">Controls</button>
-                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'upload'}" @click="activeTab = 'upload'">Upload</button>
-                <button class="btn btn-outline-light w-33" :class="{'active': activeTab == 'export'}" @click="activeTab = 'export'">Save</button>
-              </div>
-            -->
 
               <div class="tab" x-show="activeTab == 'controls'">
 
@@ -162,6 +155,16 @@
 
                 <div class="divider"></div>
 
+                <div class="control">
+
+                  <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
+
+                  <div class="btn-group w-100">
+                    <button class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload</button>
+                    <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save</button>
+                    <button class="btn btn-outline-dark" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
+                  </div>
+                </div>
 
               </div>
 
@@ -170,12 +173,7 @@
               </div>
 
 
-              <div class="tab" x-show="activeTab == 'export'">
 
-                <button class="btn btn-outline-light ml-2 mb-3 btn-style w-60" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
-
-                <button class="btn btn-outline-light ml-2 btn-style w-60" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
-              </div>
 
             </div>
           </div>

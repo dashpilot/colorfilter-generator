@@ -1,10 +1,3 @@
-document.querySelector('#tab-upload').innerHTML += `
-<div x-data="upload">
-  <button class="btn btn-outline-light btn-style" id="choose-image" @click="selectImage()">Upload Image</button>
-  <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
-</div>
-`
-
 function upload() {
   return {
     init() {
