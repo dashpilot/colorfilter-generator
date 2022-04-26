@@ -50,7 +50,7 @@
             <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
 
             <div class="btn-group mb-4">
-              <button class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload Image</button>
+              <button x-data="upload" class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload Image</button>
               <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
             </div>
 
