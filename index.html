@@ -38,23 +38,18 @@
 
         <div class="col-md-8 wdgt-main">
 
-          <div class="text-center toolbar">Filmkit QuickGrade</div>
+          <div class="text-center toolbar">Filmkit ColorLab</div>
 
 
-          <div class="text-center">
+          <div class="text-center mt-4">
+            <div x-show="loading">
+              <i class="fa fa-spinner fa-spin"></i> &nbsp;loading image...
+            </div>
             <img id="image" width="800" height="450" src="img/img2.jpg">
             <canvas id="preview" width="800" height="450"></canvas>
           </div>
 
-          <div class="text-center mt-4">
-            <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
 
-            <div class="btn-group mb-4">
-              <button x-data="upload" class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload Image</button>
-              <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
-            </div>
-
-          </div>
 
           <!-- LUT export -->
           <div id="exports">
@@ -165,8 +160,16 @@
 
 
                 <div class="divider"></div>
+
+
                 <div class="control">
-                  <button class="btn btn-outline-dark" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Export LUT</button>
+                  <input type="file" id="fileInput" accept="image/*" @change="doUpload($event)">
+
+                  <div class="btn-group mb-4 w-100">
+                    <button x-data="upload" class="btn btn-outline-dark" id="choose-image" @click="selectImage()"><i class="fa fa-image"></i></span> &nbsp;Upload</button>
+                    <button class="btn btn-outline-dark" @click="saveImage()"><span class="icon"><i class="fa fa-download"></i></span> &nbsp;Save Image</button>
+                    <button class="btn btn-outline-dark" id="export"><span class="icon"><i class="fa fa-cube"></i></span> &nbsp;Save LUT</button>
+                  </div>
                 </div>
 
               </div>

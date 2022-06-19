@@ -1,5 +1,6 @@
 function app() {
   return {
+    loading: true,
     activeTab: 'controls',
     shaR: 0.25,
     shaG: 0.25,
@@ -33,8 +34,9 @@ function app() {
 
         var myapp = this;
         setTimeout(() => {
+          myapp.loading = false;
           this.update();
-        }, 500)
+        }, 1500)
 
       }, 100)
 
